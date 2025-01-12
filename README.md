@@ -121,19 +121,13 @@ If you have any questions or feedback, feel free to contact:
 
 ### **Test Cases for User and Folder Management**
 
-#### **1. Test User Registration (`POST /api/register`)**
+#### **1. Running the Tests **
+#### **php artisan test **
 
-```php
-public function test_register_user()
-{
-    $response = $this->postJson('/api/register', [
-        'name' => 'Test User',
-        'email' => 'test@example.com',
-        'password' => 'password123',
-    ]);
+#### **2.  test file individually **
+#### **php artisan test --filter CreateNoteTest **
+#### **php artisan test --filter GetNotesTest **
+#### **php artisan test --filter DeleteNoteTest **
 
-    $response->assertStatus(201);
-    $response->assertJson([
-        'message' => 'User created successfully!',
-    ]);
-}
+
+
