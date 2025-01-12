@@ -8,11 +8,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
     
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     public function departments()
     {
         return $this->belongsToMany(Department::class);
@@ -21,6 +32,10 @@ class User extends Authenticatable
     public function folders()
     {
         return $this->hasMany(Folder::class);
+    }
+    public function notes()
+    {
+        return $this->hasManyThrough(Note::class, Folder::class);
     }
     // Get the highest salary from the departments the employee works in
     public function highestSalary()

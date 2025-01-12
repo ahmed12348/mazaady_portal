@@ -55,7 +55,6 @@ A web-based application to manage users, folders, and notes with a permission-ba
 
 Access the application at `http://localhost/Mazaady_Portal/admin/employees`.
 
-
 ---
 
 ## 📑 How to Contribute
@@ -74,6 +73,27 @@ Access the application at `http://localhost/Mazaady_Portal/admin/employees`.
     git push origin feature-name
     ```
 5. Open a pull request.
+
+---
+
+## 📋 API Endpoints
+
+### **Authentication**
+- **Register**: `POST /api/register`
+- **Login**: `POST /api/login`
+- **Logout**: `POST /api/logout`
+
+### **Folders**
+- **Create Folder**: `POST /api/folders`
+- **List Folders**: `GET /api/folders`
+- **Get Folder by ID**: `GET /api/folders/{id}`
+- **Update Folder**: `PUT /api/folders/{id}`
+- **Delete Folder**: `DELETE /api/folders/{id}`
+
+### **Notes**
+- **Create Note in Folder**: `POST /api/folders/{folder_id}/notes`
+- **Get Note by ID**: `GET /api/notes/{id}`
+- **Delete Note**: `DELETE /api/notes/{id}`
 
 ---
 
