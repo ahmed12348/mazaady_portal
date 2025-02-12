@@ -15,19 +15,15 @@ class Authenticate extends Middleware
      */
     
 
-     
      protected function redirectTo($request)
-    {
-   
-        // Check if the user is authenticated for API
-        if (!$this->auth->guard('api')->check()) {
-            // If not authenticated, return a 401 Unauthorized response
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        // If it's a web request (non-API), perform the standard redirection
-        if (!$request->expectsJson()) {
-            return route('login');
-        }
-    }
+     {
+         if (!$this->auth->guard('api')->check()) {
+             return response()->json(['error' => 'Unauthorized'], 401); // ❌ This is incorrect!
+         }
+     
+         if (!$request->expectsJson()) {
+             return route('login');
+         }
+     }
+     
 }

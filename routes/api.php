@@ -5,7 +5,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\NoteController;
+use App\Http\Controllers\Api\TaskController;
+use App\Models\User;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,27 +26,47 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::post('/tasks', [TaskController::class, 'store']);
+    Route::put('/tasks/{task}', [TaskController::class, 'update']);
+    Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+});
 
-   // Create a folder (Authenticated users only)
-    Route::post('/folders', [FolderController::class, 'create']); 
+Route::post('/register', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6'
+    ]);
 
-    // Get all folders of the authenticated user
-    Route::get('/folders', [FolderController::class, 'getAll']); 
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password)
+    ]);
 
-    // Get a specific folder by ID
-    Route::get('/folders/{id}', [FolderController::class, 'getById']); 
+    return response()->json(['token' => $user->createToken('api-token')->plainTextToken]);
+});
 
-    // Update a folder's details by ID
-    Route::put('/folders/{id}', [FolderController::class, 'update']); 
+Route::post('/login', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-    // Delete a folder by ID
-    Route::delete('/folders/{id}', [FolderController::class, 'delete']);
+    $user = User::where('email', $request->email)->first();
 
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['Invalid credentials']
+        ]);
+    }
 
-    Route::post('/notes', [NoteController::class, 'create']); // Create a note
-    Route::get('/notes', [NoteController::class, 'getAll']); // Get all notes (shared and owned)
-    Route::get('/notes/{id}', [NoteController::class, 'getById']); // Get a specific note
-    Route::put('/notes/{id}', [NoteController::class, 'update']); // Update a specific note
-    Route::delete('/notes/{id}', [NoteController::class, 'delete']);
+    return response()->json(['token' => $user->createToken('api-token')->plainTextToken]);
+});
+
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+    $request->user()->tokens()->delete();
+    return response()->json(['message' => 'Logged out']);
 });
