@@ -101,10 +101,10 @@ If you have any questions or feedback, feel free to contact:
 
 ### **Folder Endpoints**
 
-4. **POST** `/api/tasks` - Creates a new folder.
-5. **GET** `/api/tasks` - Lists all folders.
-7. **PUT** `/api/tasks/{id}` - Updates the folder details.
-8. **DELETE** `/api/tasks/{id}` - Deletes a folder.
+4. **POST** `/api/tasks` - Creates a new tasks.
+5. **GET** `/api/tasks` - Lists all tasks.
+7. **PUT** `/api/tasks/{id}` - Updates the tasks.
+8. **DELETE** `/api/tasks/{id}` - Deletes a tasks.
 
 ### **Note Endpoints**
 
