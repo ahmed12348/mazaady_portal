@@ -101,19 +101,18 @@ If you have any questions or feedback, feel free to contact:
 
 ### **Folder Endpoints**
 
-4. **POST** `/api/folders` - Creates a new folder.
-5. **GET** `/api/folders` - Lists all folders.
-6. **GET** `/api/folders/{id}` - Retrieves a specific folder by its ID.
-7. **PUT** `/api/folders/{id}` - Updates the folder details.
-8. **DELETE** `/api/folders/{id}` - Deletes a folder.
+4. **POST** `/api/tasks` - Creates a new folder.
+5. **GET** `/api/tasks` - Lists all folders.
+7. **PUT** `/api/tasks/{id}` - Updates the folder details.
+8. **DELETE** `/api/tasks/{id}` - Deletes a folder.
 
 ### **Note Endpoints**
 
-9. **POST** `/api/folders/{folder_id}/notes` - Creates a note in a specified folder.
+<!-- 9. **POST** `/api/folders/{folder_id}/notes` - Creates a note in a specified folder.
 10. **GET** `/api/notes/{id}` - Retrieves a specific note by its ID.
 11. **GET** `/api/notes` - Lists all notes (optionally filterable by folder).
 12. **PUT** `/api/notes/{id}` - Updates a specific note by its ID.
-13. **DELETE** `/api/notes/{id}` - Deletes a specific note by its ID.
+13. **DELETE** `/api/notes/{id}` - Deletes a specific note by its ID. -->
 
 ---
 
